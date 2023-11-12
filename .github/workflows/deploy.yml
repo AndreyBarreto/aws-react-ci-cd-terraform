@@ -9,14 +9,18 @@ jobs:
     steps:
       - name: Checking out code
         uses: actions/checkout@v3
+
       - name: Installing Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16"
+
       - name: Installing dependencies
         run: npm install
+
       - name: Building project
         run: npm run build
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
