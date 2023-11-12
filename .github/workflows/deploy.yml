@@ -26,3 +26,12 @@ jobs:
 
       - name: Deploy to S3 bucket
         run: aws s3 sync ./build/ s3://daive --delete
+
+      - name: Set CloudFront Distribution ID as Environment Variable
+        run: echo "CLOUDFRONT_DISTRIBUTION_ID=${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" >> $GITHUB_ENV
+
+      - name: Create CloudFront Invalidation
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+            --paths "/*"
